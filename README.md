@@ -25,3 +25,54 @@ spectrogram packages) and waveforms.
     `python .\setup.py bdist_wheel sdist`
 
     `python -m pip install .`
+
+5. Access packge in python using:
+        
+```python
+from dspwava import SvSignal, high_pass_filter, low_pass_filter, convolve_audio
+audio_filepath = '.\\test_samples\\ex_wav.wav'
+original = SvSignal(audio_filepath)
+original.toMono()
+print(audio_filepath)
+print(f"Sample Rate: {original.getSampleRate()}")
+print(f"Duration: {original.getDuration()} seconds")
+print(f"Number of Channels: {original.getNumChannels()}")
+print(f"Samples: {original.getSamples()}")
+print('Estimated Freq: {:.2f} Hz'.format(original.estimate_frequency()))
+original.visualize()
+
+high = high_pass_filter(original.copy(), 1000)
+high.toMono()
+print(f"Sample Rate: {high.getSampleRate()}")
+print(f"Duration: {high.getDuration()} seconds")
+print(f"Number of Channels: {high.getNumChannels()}")
+print(f"Samples: {high.getSamples()}")
+print('Estimated Freq: {:.2f} Hz'.format(high.estimate_frequency()))
+high.visualize()
+
+
+low = low_pass_filter(original.copy(), 200)
+low.toMono()
+print(f"Sample Rate: {low.getSampleRate()}")
+print(f"Duration: {low.getDuration()} seconds")
+print(f"Number of Channels: {low.getNumChannels()}")
+print(f"Samples: {low.getSamples()}")
+print('Estimated Freq: {:.2f} Hz'.format(low.estimate_frequency()))
+low.visualize()
+
+print('Convolving... may take some time')
+convolved = convolve_audio(
+    sample_signal = original, 
+    impulse_signal = SvSignal(filepath=os.getcwd() + '\\test_samples\\gtr_ir.wav'), 
+    normalize = True )
+
+convolved.visualize()
+print('Convolving done.')
+print(f"Sample Rate: {convolved.getSampleRate()}")
+print(f"Duration: {convolved.getDuration()} seconds")
+print(f"Number of Channels: {convolved.getNumChannels()}")
+print(f"Samples: {convolved.getSamples()}")
+print('Estimated Freq: {:.2f} Hz'.format(convolved.estimate_frequency()))
+# convolved.write(os.getcwd() + '\\test_samples\\output_colvolved.wav') 
+
+```

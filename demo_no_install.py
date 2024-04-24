@@ -39,6 +39,7 @@ print('Estimated Freq: {:.2f} Hz'.format(original.estimate_frequency()))
 original.visualize()
 
 high = high_pass_filter(original.copy(), 1000)
+high.toMono()
 print(f"Sample Rate: {high.getSampleRate()}")
 print(f"Duration: {high.getDuration()} seconds")
 print(f"Number of Channels: {high.getNumChannels()}")
@@ -48,6 +49,7 @@ high.visualize()
 
 
 low = low_pass_filter(original.copy(), 200)
+low.toMono()
 print(f"Sample Rate: {low.getSampleRate()}")
 print(f"Duration: {low.getDuration()} seconds")
 print(f"Number of Channels: {low.getNumChannels()}")
