@@ -1,0 +1,2 @@
+09:15:55 <INFO> [__main__] ----------------- Discrete Waveform Analyzer | Tue Apr 16 09:15:55 2024 -------------------
+09:15:55 <INFO> [core.Signal] Converted to mono

@@ -8,3 +8,19 @@ The specific objectives of this study are to develop a python package that enabl
 waveform and audio-files. The package should provide functions to extract features from the signal, such as frequency, amplitude, and
 phase. The user should be able to, optionally, generate visualizations of the signal, including spectrograms (not using pre-built
 spectrogram packages) and waveforms.
+
+## Install Instructions
+
+### Easy:
+
+1. Clone this repositry
+2. Navigate to the root direcotry .\DiscreteWAVAnalyzer
+3. Ensure you have pip and setuptools installed by running:
+
+    `python -m pip install setuptools`
+    
+4. Install this package with the following commands:
+   
+    `python .\setup.py bdist_wheel sdist`
+
+    `python -m pip install .`

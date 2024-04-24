@@ -1,0 +1,2 @@
+10:16:21 <INFO> [__main__] ----------------- Discrete Waveform Analyzer | Wed Apr 24 10:16:21 2024 -------------------
+10:16:43 <INFO> [app.dspwava.Signal] Signal written to C:\Users\Sean\Documents\GitHub\DiscreteWAVAnalyzer\test_samples\output_colvolved.wav
