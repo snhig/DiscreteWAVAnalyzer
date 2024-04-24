@@ -9,6 +9,9 @@ waveform and audio-files. The package should provide functions to extract featur
 phase. The user should be able to, optionally, generate visualizations of the signal, including spectrograms (not using pre-built
 spectrogram packages) and waveforms.
 
+
+### [3/13/24 Snapshot 1](https://github.com/snhig/DiscreteWAVAnalyzer/wiki/Snapshot-1)
+
 ## Install Instructions
 
 ### Easy:
