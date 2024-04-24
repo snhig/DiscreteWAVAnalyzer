@@ -63,7 +63,7 @@ low.visualize()
 print('Convolving... may take some time')
 convolved = convolve_audio(
     sample_signal = original, 
-    impulse_signal = SvSignal(filepath=os.getcwd() + '\\test_samples\\gtr_ir.wav'), 
+    impulse_signal = SvSignal('.\\test_samples\\gtr_ir.wav'), 
     normalize = True )
 
 convolved.visualize()
