@@ -26,13 +26,14 @@ spectrogram packages) and waveforms.
 
     `python -m pip install .`
 
-5. Access packge in python using:
+5. Access packge in python using `from dspwava import ...`:
         
 ```python
 from dspwava import SvSignal, high_pass_filter, low_pass_filter, convolve_audio
+
 audio_filepath = '.\\test_samples\\ex_wav.wav'
-original = SvSignal(audio_filepath)
-original.toMono()
+original = SvSignal(audio_filepath) # create a SvSignal Object
+original.toMono() # convert to single channel
 print(audio_filepath)
 print(f"Sample Rate: {original.getSampleRate()}")
 print(f"Duration: {original.getDuration()} seconds")
