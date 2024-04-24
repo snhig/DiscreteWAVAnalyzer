@@ -14,8 +14,6 @@ spectrogram packages) and waveforms.
 
 ## Install Instructions
 
-### Easy:
-
 1. Clone this repositry
 2. Navigate to the root direcotry .\DiscreteWAVAnalyzer
 3. Ensure you have pip and setuptools installed by running:
