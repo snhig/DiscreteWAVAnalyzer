@@ -9,7 +9,7 @@ check the requirements.txt for such dependencies.
 
 from app.dspwava.Signal import SvSignal
 import os, time, logging
-from app.dspwava.Filters import high_pass_filter, low_pass_filter, convolve_audio
+from app.dspwava.ExtraFilters import high_pass_filter, low_pass_filter, convolve_audio
 
 # create log and log directory for testing
 LOG_DIR = os.getcwd() + '\\logs\\'

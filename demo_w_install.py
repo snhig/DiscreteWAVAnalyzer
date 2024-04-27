@@ -9,21 +9,6 @@ This is a file that demonstrates this package after installing via the setup.bat
 import os, time, logging
 from dspwava import SvSignal, high_pass_filter, low_pass_filter, convolve_audio
 
-# create log and log directory for testing
-LOG_DIR = os.getcwd() + '\\logs\\'
-if not os.path.exists(LOG_DIR):
-    os.makedirs(LOG_DIR)
-LOGGER = logging.getLogger(__name__)
-THIS_SESSION_LOG = LOG_DIR + time.strftime('%Y%m%d%H%M%S', time.localtime()) + '.txt'
-logging.basicConfig(filename=THIS_SESSION_LOG,
-                    filemode='w',
-                    format='%(asctime)s <%(levelname)s> [%(name)s] %(message)s',
-                    datefmt='%H:%M:%S',
-                    level=logging.DEBUG)
-        
-LOGGER.info(f"----------------- Discrete Waveform Analyzer | {time.strftime('%c', time.localtime())} -------------------")
-
-
 #####
 #       DEMO STARTS HERE
 # Create a signal
@@ -39,6 +24,7 @@ print('Estimated Freq: {:.2f} Hz'.format(original.estimate_frequency()))
 print(f'Phase Spectrum: {original.getPhaseSpectrum()}')
 print(f'Unwrapped Phase Spectrum: {original.getUnwrappedPhase()}')
 print(f"Instantaneous Frequency: {original.getInstantaneousFrequency()}")
+print(' ')
 original.visualize()
 original.visualizePhase()
 original.visualizePhaseSpace()
