@@ -15,11 +15,12 @@ class SvSignal:
         self.data = data
         self.samplerate = sr
         self.channels = channels
+        self.fp_name = None
         if filepath != None:
             self.filepath = filepath
             self.data, self.samplerate = sf.read(filepath)
             self.channels = len(self.data.shape)
-     
+            self.fp_name = filepath.split('/')[-1]
     def copy(self):
         """Returns a copy of the signal object"""
         return SvSignal(filepath=self.filepath, data=self.data.copy(), sr=self.samplerate, channels=self.channels)
@@ -190,15 +191,14 @@ class SvSignal:
             lay.addWidget(plot_r)
             plot = QWidget()
             plot.setLayout(lay)
-            samples_l = self.getSamples()[0]
-            samples_r = self.getSamples()[1]
+            samples_l = self.data[0]
+            samples_r = self.data[1]
             plot_l.draw_signal(np.linspace(0, self.getDuration(), len(samples_l)), samples_l)
             plot_r.draw_signal(np.linspace(0, self.getDuration(), len(samples_r)), samples_r)
             
         else:
             plot = SvSimplePlot()
-            plot.draw_signal(np.linspace(0, self.getDuration(), len(self.data)), self.getSamples())
-        plot.setWindowTitle('Signal')
+            plot.draw_signal(np.linspace(0, self.getDuration(), len(self.data)), self.getSamples(), x_label='Time (s)', y_label='Amplitude')
         plot.show()
         app.exec()
         
@@ -273,4 +273,79 @@ class SvSignal:
         LOGGER.info(f'Signal written to {filepath}')
     
     
+    def getPhaseSpectrum(self):
+        """Returns the phase spectrum of the signal"""
+        """A method to compute and return the phase spectrum of the audio signal. 
+        The phase spectrum gives information about the phase angle of each frequency component in the signal, 
+        which is crucial for many signal processing tasks such as sound synthesis and modification."""
+        self.validDataCheck()
+        spectrum = np.fft.fft(self.data)
+        # get phase of the spectrum
+        return np.angle(spectrum)
     
+    def getUnwrappedPhase(self):
+        """Unwraps the phase spectrum in case of discontinuity"""
+        phase = self.getPhaseSpectrum()
+        unwrapped_phase = np.unwrap(phase)
+        return unwrapped_phase
+    
+    def getInstantaneousFrequency(self):
+        """
+        Computes the instantaneous frequency of the signal from its unwrapped phase.
+        This function computes the derivative of the unwrapped phase spectrum with respect to time,
+        providing the instantaneous frequency of each component of the signal. 
+        This can be useful in vibrato analysis and modulation effects.
+        """
+        unwrapped_phase = self.getUnwrappedPhase()
+        # Time vect
+        time_vector = np.linspace(0, len(self.data) / self.samplerate, num=len(self.data))
+        # Compute derivative of phase rect to time
+        inst_frequency = np.diff(unwrapped_phase) / np.diff(time_vector)
+        return inst_frequency
+    
+    def getPhaseSpace(self):
+        """Computes the phase space of the signal"""
+        self.validDataCheck()
+        if self.channels > 1:
+            data = np.mean(self.data, axis=1)
+        else:
+            data = self.data
+        
+        # Calculate the first derivative of the signal
+        first_derivative = np.diff(data, n=1)
+        # To align with the data length, prepend the first derivative with the first element of the data or another method
+        first_derivative = np.concatenate(([first_derivative[0]], first_derivative))
+        
+        return first_derivative
+    
+    def visualizePhase(self):
+        """Visualizes the phase spectrum of the signal"""
+        app = QApplication.instance()
+        if app == None:
+            app = QApplication()
+        plot = SvSimplePlot()
+        plot.draw_signal(np.linspace(0, self.getDuration(), len(self.getUnwrappedPhase())), self.getUnwrappedPhase(), x_label='Time (s)', y_label='Phase')
+        plot.setWindowTitle(f'{"" if self.fp_name == None else self.fp_name }Phase Spectrum')
+        plot.show()
+        app.exec()
+        
+    def visualizePhaseSpace(self):
+        """Visualizes the phase space of the signal"""
+        app = QApplication.instance()
+        if app == None:
+            app = QApplication()
+        plot = SvSimplePlot()
+        
+        if self.channels > 1:
+            data = np.mean(self.data, axis=1)
+        else:
+            data = self.data
+        
+        # Calculate the first derivative of the signal
+        first_derivative = self.getPhaseSpace()
+
+        
+        plot.draw_signal(data, first_derivative, x_label='Signal', y_label='First Derivative')
+        plot.setWindowTitle(f'{"" if self.fp_name == None else self.fp_name }Phase Space')
+        plot.show()
+        app.exec()

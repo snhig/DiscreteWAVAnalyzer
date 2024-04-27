@@ -7,7 +7,7 @@ dealing with byte unpacking, writing their own algorithms, and/or creating spect
 The specific objectives of this study are to develop a python package that enables the user to perform signal analysis on discrete
 waveform and audio-files. The package should provide functions to extract features from the signal, such as frequency, amplitude, and
 phase. The user should be able to, optionally, generate visualizations of the signal, including spectrograms (not using pre-built
-spectrogram packages) and waveforms.
+spectrogram packages... matplotlib) and waveforms.
 
 
 ### [3/13/24 Snapshot 1](https://github.com/snhig/DiscreteWAVAnalyzer/wiki/Snapshot-1)
@@ -26,7 +26,13 @@ spectrogram packages) and waveforms.
 
     `python -m pip install .`
 
-5. Access packge in python using `from dspwava import ...`:
+5. Troubleshoot: If above installation does not work try running:
+
+    `python .\setup.py install`
+
+    If still having issues reach out to s_higley@u.pacific.edu or shigley99@gmail.com
+
+6. Access packge in python using `from dspwava import ...`:
         
 ```python
 from dspwava import SvSignal, high_pass_filter, low_pass_filter, convolve_audio

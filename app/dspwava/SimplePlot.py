@@ -5,7 +5,7 @@ from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout
 from PySide6.QtCore import Signal
 class SvSimplePlot(QWidget):
     point_clicked_signal = Signal(list)
-    def __init__(self):
+    def __init__(self, xlabel='Time', ylabel='Amplitude'):
         super().__init__()
 
         # Create a PlotWidget
@@ -20,14 +20,13 @@ class SvSimplePlot(QWidget):
         
 
 
-    def draw_signal(self, xs, ys):
+    def draw_signal(self, xs, ys, x_label='Time', y_label='Amplitude'):
         if self.scatter is not None:
             self.plot_widget.removeItem(self.scatter)
-        self.scatter = pg.PlotCurveItem()
+        self.scatter = pg.PlotCurveItem(labels={'left': f'{x_label}', 'bottom': f'{y_label}'})
         self.plot_widget.addItem(self.scatter)
         self.scatter.setData(xs, ys)
         self.scatter.setPen(pg.mkPen(color=(171, 70, 188), width=1))
-        
         #self.scatter.scene().sigMouseClicked.connect(self.on_point_clicked)
 
     def on_point_clicked(self, event):
@@ -42,7 +41,7 @@ class SvSimplePlot(QWidget):
             print(f'Point {i} clicked.')
             self.point_clicked_signal.emit(i)
             
-            
+        
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     signal = SvSignal(filepath='test_samples/ex_wav.wav')
