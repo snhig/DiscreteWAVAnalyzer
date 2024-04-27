@@ -33,6 +33,8 @@ spectrogram packages... matplotlib) and waveforms.
     If still having issues reach out to s_higley@u.pacific.edu or shigley99@gmail.com
 
 6. Access packge in python using `from dspwava import ...`:
+
+7. See demos [package installed](https://github.com/snhig/DiscreteWAVAnalyzer/blob/main/demo_w_install.py) or [package not installed](https://github.com/snhig/DiscreteWAVAnalyzer/blob/main/demo_no_install.py)
         
 ```python
 from dspwava import SvSignal, high_pass_filter, low_pass_filter, convolve_audio
