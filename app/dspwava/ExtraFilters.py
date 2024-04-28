@@ -50,6 +50,7 @@ def apply_filter(b, a, data):
 
 
 def convolve_audio(sample_signal:SvSignal, impulse_signal:SvSignal, normalize:bool=False) -> SvSignal:
+    """Convolves the audio signal with an impulse response signal."""
     # Load the audio file and impulse response file
     audio, audio_sr = sample_signal.getSamples(), sample_signal.getSampleRate()
     impulse, impulse_sr = impulse_signal.getSamples(), impulse_signal.getSampleRate()
